@@ -1,0 +1,135 @@
+{
+  "info": {
+    "name": "CinemaTicket API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "API collection for Cinema Ticket Booking System"
+  },
+  "item": [
+    {
+      "name": "Auth Mock Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/auth/mock",
+          "host": ["{{baseUrl}}"],
+          "path": ["auth", "mock"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": \"user-1\",\n  \"role\": \"USER\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Get Seat Map",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/shows/show-1/seats",
+          "host": ["{{baseUrl}}"],
+          "path": ["shows", "show-1", "seats"]
+        }
+      }
+    },
+    {
+      "name": "Lock Seat",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/shows/show-1/seats/A1/lock",
+          "host": ["{{baseUrl}}"],
+          "path": ["shows", "show-1", "seats", "A1", "lock"]
+        }
+      }
+    },
+    {
+      "name": "Confirm Booking",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/shows/show-1/seats/A1/confirm",
+          "host": ["{{baseUrl}}"],
+          "path": ["shows", "show-1", "seats", "A1", "confirm"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"movie\": \"Demo Movie\",\n  \"show_date\": \"2026-03-10\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Admin Bookings",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{adminToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/admin/bookings?movie=Demo%20Movie&date=2026-03-10",
+          "host": ["{{baseUrl}}"],
+          "path": ["admin", "bookings"],
+          "query": [
+            { "key": "movie", "value": "Demo Movie" },
+            { "key": "date", "value": "2026-03-10" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Admin Audit Logs",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{adminToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/admin/audit-logs?event=BOOKING_SUCCESS",
+          "host": ["{{baseUrl}}"],
+          "path": ["admin", "audit-logs"],
+          "query": [
+            { "key": "event", "value": "BOOKING_SUCCESS" }
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "token", "value": "" },
+    { "key": "adminToken", "value": "" }
+  ]
+}
