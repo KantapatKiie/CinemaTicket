@@ -1,0 +1,50 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: cinema-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  redis:
+    image: redis:7-alpine
+    container_name: cinema-redis
+    ports:
+      - "6379:6379"
+
+  backend:
+    build:
+      context: ./backend
+    container_name: cinema-backend
+    environment:
+      PORT: 8080
+      MONGO_URI: mongodb://mongo:27017
+      MONGO_DB: cinema
+      REDIS_ADDR: redis:6379
+      REDIS_PASSWORD: ""
+      REDIS_DB: 0
+      JWT_SECRET: dev-secret
+      FIREBASE_PROJECT_ID: ""
+      LOCK_TTL_SECONDS: 300
+      SEAT_ROWS: 5
+      SEAT_COLS: 10
+    depends_on:
+      - mongo
+      - redis
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: cinema-frontend
+    environment:
+      VITE_API_BASE: http://localhost:8080
+    depends_on:
+      - backend
+    ports:
+      - "5173:5173"
+
+volumes:
+  mongo_data:
