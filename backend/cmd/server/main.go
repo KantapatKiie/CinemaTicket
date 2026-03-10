@@ -201,6 +201,7 @@ func main() {
 	go app.consumeSeatEvents()
 
 	r := gin.Default()
+	r.Use(corsMiddleware())
 	r.GET("/health", func(c *gin.Context) { c.JSON(http.StatusOK, gin.H{"status": "ok"}) })
 	r.POST("/auth/mock", app.mockLogin)
 
@@ -622,4 +623,22 @@ func isFirebaseToken(raw string) bool {
 	}
 	iss, _ := claims["iss"].(string)
 	return strings.HasPrefix(iss, "https://securetoken.google.com/")
+}
+
+func corsMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		origin := c.GetHeader("Origin")
+		if origin != "" {
+			c.Header("Access-Control-Allow-Origin", origin)
+			c.Header("Vary", "Origin")
+			c.Header("Access-Control-Allow-Credentials", "true")
+			c.Header("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept, Origin")
+			c.Header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS")
+		}
+		if c.Request.Method == http.MethodOptions {
+			c.AbortWithStatus(http.StatusNoContent)
+			return
+		}
+		c.Next()
+	}
 }

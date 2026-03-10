@@ -17,26 +17,41 @@
 - Docker Desktop
 - Docker Compose V2
 
-### macOS / Linux
+Always run commands from project root:
+
+```bash
+cd CinemaTicket
+```
+
+### Option 1: Docker Compose (Recommended)
+
+```bash
+docker compose up --build
+```
+
+### Option 2: Script (macOS / Linux)
 
 ```bash
 chmod +x scripts/run-all.sh
 ./scripts/run-all.sh
 ```
 
-### Windows (PowerShell or CMD)
+### Option 3: Script (Windows PowerShell / CMD)
 
 ```bat
-scripts\\run-all.bat
+scripts\run-all.bat
 ```
 
-### Direct command (all platforms)
+### Option 4: Local Dev Mode (backend + frontend together)
+
+This mode runs backend and frontend on your machine and starts only MongoDB + Redis with Docker.
 
 ```bash
-docker compose up --build
+chmod +x scripts/start-dev.sh
+./scripts/start-dev.sh
 ```
 
-### Short Commands with Make (macOS / Linux)
+### Quick Commands with Make (macOS / Linux)
 
 ```bash
 make up
@@ -45,7 +60,14 @@ make build
 make compose-validate
 ```
 
-### Short Commands with Task (Windows/macOS/Linux)
+### Quick Commands with Task (Windows/macOS/Linux)
+
+Install Task:
+
+- macOS: `brew install go-task/tap/go-task`
+- Windows: `choco install go-task`
+
+Then run:
 
 ```bash
 task up
@@ -54,11 +76,33 @@ task build
 task compose-validate
 ```
 
-Frontend: http://localhost:5173
+### Service URLs
 
-Backend: http://localhost:8080
+- Frontend: http://localhost:5173
+- Backend: http://localhost:8080
+- Health: http://localhost:8080/health
 
-Health: http://localhost:8080/health
+### Stop Project
+
+If running with Docker Compose:
+
+```bash
+docker compose down
+```
+
+If running with `scripts/start-dev.sh`:
+
+- Press `Ctrl + C` in the same terminal window
+
+### Troubleshooting
+
+- `no configuration file provided: not found`
+  - Run command in project root (`CinemaTicket`) or specify compose file path.
+- Browser CORS error from `http://localhost:5173` to `http://localhost:8080`
+  - Rebuild backend container to apply latest backend changes:
+    ```bash
+    docker compose up -d --build backend
+    ```
 
 ## Main APIs
 
@@ -101,13 +145,13 @@ Health: http://localhost:8080/health
 
 Frontend page in role `ADMIN` can view bookings and filter by movie/date using API query
 
-## Audit and Event
+## Events
 
 - Every critical action is stored in Mongo collection `audit_logs`
 - Booking success event is published through Redis pub/sub `booking_events`
 - Event consumer writes notification records into Mongo collection `notifications`
 
-## Bonus Files
+## PostmanCollection
 
 - Postman collection: `postman/CinemaTicket.postman_collection.json`
 - Backend test cases: `backend/cmd/server/main_test.go`
