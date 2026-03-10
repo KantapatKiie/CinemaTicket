@@ -1,0 +1,32 @@
+version: '3'
+
+tasks:
+  up:
+    cmds:
+      - docker compose up --build
+
+  down:
+    cmds:
+      - docker compose down
+
+  test:
+    deps: [test-backend]
+
+  test-backend:
+    cmds:
+      - cd backend && go test ./...
+
+  build:
+    deps: [build-backend, build-frontend]
+
+  build-backend:
+    cmds:
+      - cd backend && go build ./...
+
+  build-frontend:
+    cmds:
+      - cd frontend && npm install && npm run build
+
+  compose-validate:
+    cmds:
+      - docker compose config

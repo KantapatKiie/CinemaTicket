@@ -8,6 +8,8 @@
 - scripts
 - docs
 - docker-compose.yml
+- Makefile
+- Taskfile.yml
 - README.md
 
 ## backend
@@ -16,6 +18,8 @@
 - cmd/server/main_test.go
 - internal/seatmap/seatmap.go
 - internal/seatmap/seatmap_test.go
+- internal/booking/service.go
+- internal/booking/service_integration_test.go
 - Dockerfile
 - go.mod
 - go.sum

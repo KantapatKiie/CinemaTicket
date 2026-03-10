@@ -36,6 +36,24 @@ scripts\\run-all.bat
 docker compose up --build
 ```
 
+### Short Commands with Make (macOS / Linux)
+
+```bash
+make up
+make test
+make build
+make compose-validate
+```
+
+### Short Commands with Task (Windows/macOS/Linux)
+
+```bash
+task up
+task test
+task build
+task compose-validate
+```
+
 Frontend: http://localhost:5173
 
 Backend: http://localhost:8080
@@ -97,6 +115,11 @@ Frontend page in role `ADMIN` can view bookings and filter by movie/date using A
 ## Additional Docs
 
 - Structure: `docs/STRUCTURE.md`
+
+## Testing
+
+- Booking flow integration-style tests with in-memory doubles: `backend/internal/booking/service_integration_test.go`
+- Auth middleware tests: `backend/cmd/server/auth_middleware_test.go`
 
 ## CI
 
