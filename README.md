@@ -1,5 +1,7 @@
 # Cinema Ticket Booking System
 
+[![CI](https://github.com/KantapatKiie/CinemaTicket/actions/workflows/ci.yml/badge.svg)](https://github.com/KantapatKiie/CinemaTicket/actions/workflows/ci.yml)
+
 ## Stack
 
 - Backend: Go + Gin
