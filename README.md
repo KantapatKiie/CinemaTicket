@@ -169,3 +169,29 @@ Frontend page in role `ADMIN` can view bookings and filter by movie/date using A
 
 - GitHub Actions workflow: `.github/workflows/ci.yml`
 - Runs backend test/build, frontend build, and docker compose config validation on push and pull request
+
+**Guideline for Performance**
+
+- App → Kafka → Flink → ClickHouse
+
+Frontend / Mobile App
+
+    ▼
+
+    Backend API
+
+    ▼
+
+    Apache Kafka
+
+    ▼
+
+    Apache Flink
+
+    ▼
+
+    ClickHouse
+
+    ▼
+
+   BI / Dashboard / ML
