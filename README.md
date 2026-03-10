@@ -95,3 +95,8 @@ Frontend page in role `ADMIN` can view bookings and filter by movie/date using A
 ## Additional Docs
 
 - Structure: `docs/STRUCTURE.md`
+
+## CI
+
+- GitHub Actions workflow: `.github/workflows/ci.yml`
+- Runs backend test/build, frontend build, and docker compose config validation on push and pull request
